@@ -1,9 +1,26 @@
 package day02.gugudan;
 
 
-import java.util.Scanner;
+//import java.util.Scanner;
+
+
+// 다른 패키지로의 접근이 가능한가 싶어서 해봄,,
 public class Gugudan {
-	public static void main(String[] args) {
+	
+	public static int[] calculate(int turns) {
+		int[] result = new int[turns];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = turns * (i+1);
+		}
+		return result;
+	}
+	
+	public static void print(int[] result) {
+		for (int i = 0; i < result.length; i++) {
+			System.out.println(result[i]);
+		}
+	}
+//	public static void main(String[] args) {
 		
 		
 //		// 8, 9단
@@ -95,5 +112,5 @@ public class Gugudan {
 //		System.out.println(number * 9);
 		
 
-		}
+//		}
 }
