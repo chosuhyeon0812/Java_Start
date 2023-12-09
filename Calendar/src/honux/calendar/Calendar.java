@@ -36,7 +36,14 @@ public class Calendar {
 		}
 		int maxDay = getmaxDaysofMonth(year, month2);
 		int count = 7 - weekday;
-		int delim = count;
+		// 7보다 작으면 count 7이면 0
+		
+		int delim;
+		if (count < 7) {
+			delim = count;
+		} else {
+			delim = 0;
+		}
 				
 		// print first line(제일 윗줄 먼저 계산하고 나머지 7개씩 끊어서 순환하기)
 		for (int i = 1; i <= count; i++) {
