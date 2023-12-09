@@ -1,7 +1,0 @@
-package day02.gugudan;
-
-public class Gugudan4 {
-	public static void main(String[] args) {
-		
-	}
-}
