@@ -1,8 +1,38 @@
 package honux.calendar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
 public class Calendar {
 	private final int[] MAX_DAYS = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	private final int[] LEAP_MAX_DAYS = { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	
+	private HashMap <Date, String> planMap;
+	
+	public Calendar() {
+		planMap = new HashMap<Date, String>();
+	}
+	
+	
+	/**
+	 * @param date : "2023-12-23"
+	 * @param plan
+	 */
+	
+	public void registerPlan(String strDate, String plan) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+		// 일정 저장하기
+		planMap.put(date, plan);
+	}
+	
+	// 일정 확인하기
+	public String searchPlan(String strDate) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+		String plan = planMap.get(date);
+		return plan;
+	}
 	
 	public boolean isLeapYear(int year) {
 		if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
@@ -88,5 +118,10 @@ public class Calendar {
 		int weekday = (count + STANDARD_WEEKDAY) % 7;
 		return weekday;
 	}
-
+	
+	public static void main(String[] args) throws ParseException {
+		Calendar cal = new Calendar();
+		cal.registerPlan("2023-12-25", "크리스마스다");
+		System.out.println(cal.searchPlan("2023-12-25").equals("크리스마스다"));
+	}
 }
