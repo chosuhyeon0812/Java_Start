@@ -1,8 +1,8 @@
 package honux.calendar;
 
 public class Calendar {
-	private final int[] MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-	private final int[] LEAP_MAX_DAYS = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	private final int[] MAX_DAYS = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	private final int[] LEAP_MAX_DAYS = { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	
 	public boolean isLeapYear(int year) {
 		if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
@@ -12,9 +12,9 @@ public class Calendar {
 	
 	public int getmaxDaysofMonth(int year, int month2) {
 		if (isLeapYear(year)) {
-			return LEAP_MAX_DAYS[month2 - 1];
+			return LEAP_MAX_DAYS[month2];
 		} else {			
-			return MAX_DAYS[month2 - 1];
+			return MAX_DAYS[month2];
 		}
 	}
 	
@@ -25,10 +25,13 @@ public class Calendar {
 	 * - 프롬프트를 출력한다.
 	 */
 	// 숫자를 입력받아 해당하는 달의 최대 일수를 출력하는 프로그램
-	public void printCalendar(int year, int month2, int weekday) {
-		System.out.printf("   <<%4d년 %2d월>>\n", year, month2);
+	public void printCalendar(int year, int month2) {
+		System.out.printf("   <<%d년 %d월>>\n", year, month2);
 		System.out.println(" SU MO TU WE TH FR SA");
 		System.out.println("---------------------");
+		
+		// get weekday automatically 
+		int weekday = getWeekDay(year, month2, 1);
 		
 		// print blank space
 		for (int i = 0; i < weekday; i++) {
@@ -62,6 +65,28 @@ public class Calendar {
 		}
 		System.out.println();
 		System.out.println();
+	}
+
+	private int getWeekDay(int year, int month2, int day) {
+		int syear = 1970;
+		final int  STANDARD_WEEKDAY = 4; // 1970/Jan/1st/Thursday
+		
+		int count = 0;
+		
+		for (int i = syear; i < year; i++) {
+			int delta = isLeapYear(i) ? 366 : 365;
+			count += delta;
+		}
+		
+		for (int i = 1; i < month2; i++) {
+			int delta = getmaxDaysofMonth(year, i);
+			count += delta;
+		}
+		
+		count += day -1 ;
+		
+		int weekday = (count + STANDARD_WEEKDAY) % 7;
+		return weekday;
 	}
 
 }
